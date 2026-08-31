@@ -17,4 +17,6 @@ class OrdenDeTrabajo:
         item.marcar_como_asignado()
 
         self._items.append(item)
-    
+
+    def presupuesto(self):
+        return sum(item.costo for item in self._items) #sum devuelve 0 si la colección está vacía
