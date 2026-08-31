@@ -5,6 +5,8 @@ from solucion.mecanico import Mecanico
 class OrdenDeTrabajo:
     def __init__(self, numero_orden: int, vehiculo: Vehiculo, mecanico: Mecanico):
         self.numero_orden = numero_orden
+        vehiculo.asignar_a_orden()
+        mecanico.asignar_a_orden()
         self.vehiculo = vehiculo
         self.mecanico = mecanico
         self._items = []
@@ -20,3 +22,15 @@ class OrdenDeTrabajo:
 
     def presupuesto(self):
         return sum(item.costo for item in self._items) #sum devuelve 0 si la colección está vacía
+
+    def cerrar(self):
+        if self.cerrada:
+            raise ValueError("La orden de trabajo ya se encuentra cerrada.")
+
+        self.cerrada = True
+
+        self.vehiculo.reparado()
+
+        self.mecanico.disponible()
+
+
