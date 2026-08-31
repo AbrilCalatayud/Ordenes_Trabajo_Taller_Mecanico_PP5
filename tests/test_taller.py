@@ -29,3 +29,19 @@ def test_camino_feliz_crear_orden_agregar_items_presupuesto_y_cierre():
     assert vehiculo.en_reparacion is False
     assert mecanico.ocupado is False
 
+def test_rechazo_asignar_mismo_item_a_dos_ordenes():
+    taller = Taller()
+    mecanico_1 = taller.registrar_mecanico()
+    vehiculo_1 = Vehiculo("AAA111")
+    mecanico_2 = taller.registrar_mecanico()
+    vehiculo_2 = Vehiculo("BBB222")
+
+    orden1 = taller.crear_orden(vehiculo_1, mecanico_1)
+    orden2 = taller.crear_orden(vehiculo_2, mecanico_2)
+
+    item = ItemDeTrabajo("Alineación y balanceo", 10000.0)
+
+    orden1.agregar_item(item)
+
+    with pytest.raises(ValueError):
+        orden2.agregar_item(item)
