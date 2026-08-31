@@ -24,7 +24,7 @@
 | ItemDeTrabajo | validar si no tiene una orden ya asignada |  |
 | Vehiculo | validar si no tiene órdenes abiertas (en reparación o no), actualizar su estado de reparación |  |
 | Mecanico | saber si está disponible, cambiar su disponibilidad |  |
-| Taller | crear órdenes, cerrar órdenes, registrar mecánicos, asignar mecánicos | OrdenDeTrabajo, Mecanico, Vehiculo |
+| Taller | crear órdenes, registrar mecánicos | OrdenDeTrabajo, Mecanico, Vehiculo |
 
 ## Tabla de Relaciones
 | Relación | Tipo | Justificación | Por qué no es otro tipo |
