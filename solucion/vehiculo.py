@@ -9,5 +9,5 @@ class Vehiculo:
 
         self.en_reparacion = True
 
-    def reparado(self) -> None:
+    def liberar(self) -> None:
         self.en_reparacion = False

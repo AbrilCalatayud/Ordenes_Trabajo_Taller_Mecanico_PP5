@@ -9,5 +9,5 @@ class Mecanico:
 
         self.ocupado = True
 
-    def disponible(self) -> None:
+    def liberar(self) -> None:
         self.ocupado = False
