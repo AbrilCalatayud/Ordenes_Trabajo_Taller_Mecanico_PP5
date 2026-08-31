@@ -5,70 +5,69 @@ from solucion.orden_de_trabajo import OrdenDeTrabajo
 from solucion.taller import Taller
 from solucion.vehiculo import Vehiculo
 
-class TestTaller:
-    def test_camino_feliz_crear_orden_agregar_items_presupuesto_y_cierre():
-        taller = Taller()
-        mecanico = taller.registrar_mecanico()
-        vehiculo = Vehiculo("ABC123")
+def test_camino_feliz_crear_orden_agregar_items_presupuesto_y_cierre():
+    taller = Taller()
+    mecanico = taller.registrar_mecanico()
+    vehiculo = Vehiculo("ABC123")
 
-        orden = taller.crear_orden(vehiculo, mecanico)
+    orden = taller.crear_orden(vehiculo, mecanico)
 
-        item_1 = ItemDeTrabajo("Cambio de aceite", 15000.0)
-        item_2 = ItemDeTrabajo("Filtro de aire", 5000.0)
+    item_1 = ItemDeTrabajo("Cambio de aceite", 15000.0)
+    item_2 = ItemDeTrabajo("Filtro de aire", 5000.0)
 
-        orden.agregar_item(item_1)
-        orden.agregar_item(item_2)
+    orden.agregar_item(item_1)
+    orden.agregar_item(item_2)
 
-        assert orden.numero_orden == 1
-        assert orden.cerrado is False
-        assert vehiculo.en_reparacion is True
-        assert mecanico.ocupado is True
-        assert orden.presupuesto() == 20000.0
+    assert orden.numero_orden == 1
+    assert orden.cerrada is False
+    assert vehiculo.en_reparacion is True
+    assert mecanico.ocupado is True
+    assert orden.presupuesto() == 20000.0
 
-        orden.cerrar()
-        assert orden.cerrada is True
-        assert vehiculo.en_reparacion is False
-        assert mecanico.ocupado is False
+    orden.cerrar()
+    assert orden.cerrada is True
+    assert vehiculo.en_reparacion is False
+    assert mecanico.ocupado is False
 
-    def test_rechazo_asignar_mismo_item_a_dos_ordenes():
-        taller = Taller()
-        mecanico_1 = taller.registrar_mecanico()
-        vehiculo_1 = Vehiculo("AAA111")
-        mecanico_2 = taller.registrar_mecanico()
-        vehiculo_2 = Vehiculo("BBB222")
+def test_rechazo_asignar_mismo_item_a_dos_ordenes():
+    taller = Taller()
+    mecanico_1 = taller.registrar_mecanico()
+    vehiculo_1 = Vehiculo("AAA111")
+    mecanico_2 = taller.registrar_mecanico()
+    vehiculo_2 = Vehiculo("BBB222")
 
-        orden1 = taller.crear_orden(vehiculo_1, mecanico_1)
-        orden2 = taller.crear_orden(vehiculo_2, mecanico_2)
+    orden1 = taller.crear_orden(vehiculo_1, mecanico_1)
+    orden2 = taller.crear_orden(vehiculo_2, mecanico_2)
 
-        item = ItemDeTrabajo("Alineación y balanceo", 10000.0)
+    item = ItemDeTrabajo("Alineación y balanceo", 10000.0)
 
-        orden1.agregar_item(item)
+    orden1.agregar_item(item)
 
-        with pytest.raises(ValueError):
-            orden2.agregar_item(item)
+    with pytest.raises(ValueError):
+        orden2.agregar_item(item)
 
-    def test_rechazo_asignar_mismo_vehiculo_a_dos_ordenes_activas():
-        taller = Taller()
-        mecanico_1 = taller.registrar_mecanico()
-        vehiculo_1 = Vehiculo("AAA111")
-        mecanico_2 = taller.registrar_mecanico()
+def test_rechazo_asignar_mismo_vehiculo_a_dos_ordenes_activas():
+    taller = Taller()
+    mecanico_1 = taller.registrar_mecanico()
+    vehiculo_1 = Vehiculo("AAA111")
+    mecanico_2 = taller.registrar_mecanico()
 
-        orden1 = taller.crear_orden(vehiculo_1, mecanico_1)
+    orden1 = taller.crear_orden(vehiculo_1, mecanico_1)
 
-        with pytest.raises(ValueError):
-            orden2 = taller.crear_orden(vehiculo_1, mecanico_2)
+    with pytest.raises(ValueError):
+        orden2 = taller.crear_orden(vehiculo_1, mecanico_2)
 
-        assert mecanico_2.ocupado is False
+    assert mecanico_2.ocupado is False
 
-    def test_rechazo_asignar_mismo_mecanico_a_dos_ordenes_activas_rollback_funciona():
-        taller = Taller()
-        mecanico_1 = taller.registrar_mecanico()
-        vehiculo_1 = Vehiculo("AAA111")
-        vehiculo_2 = Vehiculo("BBB222")
+def test_rechazo_asignar_mismo_mecanico_a_dos_ordenes_activas_rollback_funciona():
+    taller = Taller()
+    mecanico_1 = taller.registrar_mecanico()
+    vehiculo_1 = Vehiculo("AAA111")
+    vehiculo_2 = Vehiculo("BBB222")
 
-        orden1 = taller.crear_orden(vehiculo_1, mecanico_1)
+    orden1 = taller.crear_orden(vehiculo_1, mecanico_1)
 
-        with pytest.raises(ValueError):
-            orden2 = taller.crear_orden(vehiculo_2, mecanico_1)
+    with pytest.raises(ValueError):
+        orden2 = taller.crear_orden(vehiculo_2, mecanico_1)
 
-        assert vehiculo_2.en_reparacion is False
+    assert vehiculo_2.en_reparacion is False
