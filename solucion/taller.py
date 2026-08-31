@@ -1,5 +1,4 @@
 from solucion.orden_de_trabajo import OrdenDeTrabajo
-from solucion.item_de_trabajo import ItemDeTrabajo
 from solucion.vehiculo import Vehiculo
 from solucion.mecanico import Mecanico
 
@@ -10,7 +9,7 @@ class Taller:
         self.siguiente_numero_de_orden = 1
         self.siguiente_numero_de_legajo = 1
 
-    def crear_orden(self, vehiculo, mecanico) -> OrdenDeTrabajo:
+    def crear_orden(self, vehiculo: Vehiculo, mecanico: Mecanico) -> OrdenDeTrabajo:
         vehiculo.asignar_a_orden()
         try:
             mecanico.asignar_a_orden()
@@ -26,4 +25,11 @@ class Taller:
 
         return nueva_orden
 
-    
+    def registrar_mecanico(self) -> Mecanico:
+        nuevo_mecanico = Mecanico(self.siguiente_numero_de_legajo)
+
+        self.siguiente_numero_de_legajo += 1
+
+        self.mecanicos.append(nuevo_mecanico)
+
+        return nuevo_mecanico
