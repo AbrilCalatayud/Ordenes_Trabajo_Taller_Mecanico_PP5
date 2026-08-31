@@ -18,5 +18,12 @@
 * *Estado de la Orden*, porque simplemente puede ser un atributo booleano de la clase OrdenDeTrabajo (en curso/terminada). No hay anda que indique que podría ser más complicado por el momento.
 
 ## Tarjetas CRC
+| Clase | Responsabilidades | Colaboradores |
+|---|---|---|
+| OrdenDeTrabajo | agregar ítems, calcular presupuesto, saber si está cerrada | ItemDeTrabajo, Vehiculo, Mecanico |
+| ItemDeTrabajo | validar si no tiene una orden ya asignada |  |
+| Vehiculo | validar si no tiene órdenes abiertas (en reparación o no), actualizar su estado de reparación |  |
+| Mecanico | saber si está disponible, cambiar su disponibilidad |  |
+| Taller | crear órdenes, cerrar órdenes, registrar mecánicos, asignar mecánicos | OrdenDeTrabajo, Mecanico, Vehiculo |
 
 ## Tabla de Relaciones
