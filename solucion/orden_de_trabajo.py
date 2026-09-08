@@ -4,6 +4,13 @@ from solucion.mecanico import Mecanico
 
 class OrdenDeTrabajo:
     def __init__(self, numero_orden: int, vehiculo: Vehiculo, mecanico: Mecanico):
+        vehiculo.asignar_a_orden()
+        try:
+            mecanico.asignar_a_orden()
+        except ValueError:
+            vehiculo.liberar() #para que no quede en reparación si el mecánico que se intentó asignar no estaba disponible
+            raise #para que vuelva a lanzar el mismo error hacia quien intentó crear la orden
+
         self.numero_orden = numero_orden
         self.vehiculo = vehiculo
         self.mecanico = mecanico
